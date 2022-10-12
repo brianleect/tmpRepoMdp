@@ -471,8 +471,11 @@ void straightenWhileMoving(int direction) {
 	*aRxBuffer = 'Z';
 	htim1.Instance->CCR4 = CENTER+3;
 	motorSpeed(2000, 2000);
-	irLprev = irLeft(); irRprev = irRight(); osDelay(500);
-	int targetDist = 15;
+	HAL_Delay(750);
+	irLprev = irLeft(); irRprev = irRight();
+	while (irLprev>=79 || irRprev >=79) { irLprev = irLeft(); irRprev = irRight(); HAL_Delay(50);}
+
+	//int targetDist = 15;
 
 	if (direction == 1) // IR left
 	{
@@ -723,7 +726,7 @@ void motors(void *argument)
 	HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_2);
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
 
-	*aRxBuffer = 'W';
+	*aRxBuffer = 'V';
 	for (;;)
 	{
 		switch (*aRxBuffer)
